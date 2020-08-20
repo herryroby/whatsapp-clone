@@ -14,4 +14,6 @@ web-build/
 
 # misc
 .env
+.env.development
+.env.production
 TODO.md
