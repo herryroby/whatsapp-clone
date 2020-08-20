@@ -42,12 +42,12 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ route }) => {
           <View style={styles.messageContent}>
             <Text style={styles.messageText}>{chat.message}</Text>
           </View>
-          <View style={{ alignSelf: 'flex-end' }}>
+          <View style={styles.flexEnd}>
             <Text note style={styles.timestamp}>
               {chat.timestamp}
             </Text>
           </View>
-          <View style={{ alignSelf: 'flex-end' }}>
+          <View style={styles.flexEnd}>
             {chat.user === userData.username && <MaterialCommunityIcons name="check-all" style={styles.readIcon} />}
           </View>
         </View>
@@ -64,7 +64,6 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ route }) => {
                 autoFocus
                 value={message}
                 onChangeText={(value) => handleChange(value)}
-                // onSubmitEditing={handleSubmitEditing}
               />
               <FontAwesome name="paperclip" style={styles.attachIcon} />
               <FontAwesome name="camera" style={styles.cameraIcon} />
@@ -117,6 +116,9 @@ const styles = StyleSheet.create({
     fontSize: 25,
     margin: 10,
     color: colors.medium,
+  },
+  flexEnd: {
+    alignSelf: 'flex-end',
   },
   formItem: {
     backgroundColor: colors.white,

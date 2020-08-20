@@ -2,6 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
 import ChatHeader from '../components/ChatHeader';
 import colors from '../config/colors';
+import CameraScreen from '../screens/CameraScreen';
 import ChatScreen from '../screens/ChatScreen';
 import MainScreen from '../screens/MainScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
@@ -12,6 +13,7 @@ const AppNavigator: React.FC = () => (
   <Stack.Navigator>
     <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false }} />
     <Stack.Screen name="Main" component={MainScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="Camera" component={CameraScreen} options={{ headerShown: false }} />
     <Stack.Screen
       name="Chat"
       component={ChatScreen}

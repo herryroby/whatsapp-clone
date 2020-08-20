@@ -7,6 +7,7 @@ import Screen from '../components/Screen';
 import colors from '../config/colors';
 import { callsData, chatData, statusData, userData } from '../data/mocks';
 import CallListScreen from './CallListScreen';
+import CameraScreen from './CameraScreen';
 import ChatListScreen from './ChatListScreen';
 import StatusListScreen from './StatusListScreen';
 
@@ -30,7 +31,9 @@ const Tabs: React.FC = () => {
               <FontAwesome name="camera" size={20} style={styles.cameraIcon} />
             </TabHeading>
           }
-        />
+        >
+          <CameraScreen />
+        </Tab>
         <Tab
           heading="CHATS"
           tabStyle={styles.tabHeading}

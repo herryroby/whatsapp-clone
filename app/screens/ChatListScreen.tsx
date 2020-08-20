@@ -13,6 +13,7 @@ interface ChatListScreenProps {
 
 const ChatListScreen: React.FC<ChatListScreenProps> = ({ chats }) => {
   const navigation = useNavigation();
+
   return (
     <Container>
       <List
