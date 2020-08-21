@@ -1,19 +1,53 @@
 import { FontAwesome, Fontisto, MaterialCommunityIcons } from '@expo/vector-icons';
-import { Button, Form, Icon, Input, Item, Text, View } from 'native-base';
-import React, { useEffect, useState } from 'react';
+import { Button, Container, Form, Icon, Input, Item, Text, View } from 'native-base';
+import React, { FC, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import Screen from '../components/Screen';
 import colors from '../config/colors';
-import { chatData, userData } from '../data/mocks';
+import { ChatRoom, fetchChats } from '../redux/reducers/chatsSlice';
+import { fetchUser, User } from '../redux/reducers/userSlice';
+import { RootState } from '../redux/rootReducer';
 
 interface ChatScreenProps {
   route: any;
 }
 
-const ChatScreen: React.FC<ChatScreenProps> = ({ route }) => {
+const ChatScreen: FC<ChatScreenProps> = ({ route }) => {
   const [message, setMessage] = useState('');
   const [showMicrophone, setShowMicrophone] = useState(true);
+  const [user, setUser] = useState<User | any>({});
+  const [userLoading, setUserLoading] = useState(false);
+  const [userError, setUserError] = useState<string | null>(null);
+  const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
+  const [chatRoomsLoading, setChatRoomsLoading] = useState(false);
+  const [chatRoomsError, setChatRoomsError] = useState<string | null>(null);
   const { chatRoomId } = route.params;
+  const dispatch = useDispatch();
+  const userSelector = useSelector((state: RootState) => ({
+    loading: state.user.loading,
+    error: state.user.error,
+    data: state.user.data,
+  }));
+  const chatRoomsSelector = useSelector((state: RootState) => ({
+    loading: state.chats.loading,
+    error: state.chats.error,
+    data: state.chats.data,
+  }));
+
+  useEffect(() => {
+    dispatch(fetchUser());
+    dispatch(fetchChats());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setUserLoading(userSelector.loading);
+    setUserError(userSelector.error);
+    setUser(userSelector.data);
+    setChatRoomsLoading(chatRoomsSelector.loading);
+    setChatRoomsError(chatRoomsSelector.error);
+    setChatRooms(chatRoomsSelector.data);
+  }, [userSelector, chatRoomsSelector]);
 
   useEffect(() => {
     if (message.length > 0) {
@@ -23,7 +57,23 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ route }) => {
     }
   }, [message]);
 
-  const chats = chatData.filter((data) => data.chatRoomId === chatRoomId);
+  if (userLoading || chatRoomsLoading) {
+    return (
+      <Container>
+        <Text>Loading...</Text>
+      </Container>
+    );
+  }
+
+  if (userError || chatRoomsError) {
+    return (
+      <Container>
+        <Text> Error: {!!userError ? userError : chatRoomsError}</Text>
+      </Container>
+    );
+  }
+
+  const chatsFiltered = chatRooms.filter((item) => item.chatRoomId === chatRoomId);
 
   const handleChange = (value: string) => setMessage(value);
 
@@ -34,24 +84,22 @@ const ChatScreen: React.FC<ChatScreenProps> = ({ route }) => {
 
   return (
     <Screen style={styles.screen}>
-      {chats[0].conversations.map((chat, index) => (
-        <View
-          key={`${chat}${index}`}
-          style={chat.user === userData.username ? styles.outgoingMessage : styles.incomingMessage}
-        >
-          <View style={styles.messageContent}>
-            <Text style={styles.messageText}>{chat.message}</Text>
+      {chatsFiltered.length > 0 &&
+        chatsFiltered[0].conversations.map((chat) => (
+          <View key={chat.convId} style={chat.user === user.username ? styles.outgoingMessage : styles.incomingMessage}>
+            <View style={styles.messageContent}>
+              <Text style={styles.messageText}>{chat.message}</Text>
+            </View>
+            <View style={styles.flexEnd}>
+              <Text note style={styles.timestamp}>
+                {chat.timestamp}
+              </Text>
+            </View>
+            <View style={styles.flexEnd}>
+              {chat.user === user.username && <MaterialCommunityIcons name="check-all" style={styles.readIcon} />}
+            </View>
           </View>
-          <View style={styles.flexEnd}>
-            <Text note style={styles.timestamp}>
-              {chat.timestamp}
-            </Text>
-          </View>
-          <View style={styles.flexEnd}>
-            {chat.user === userData.username && <MaterialCommunityIcons name="check-all" style={styles.readIcon} />}
-          </View>
-        </View>
-      ))}
+        ))}
       <View style={styles.chatFooter}>
         <View style={styles.inputContainer}>
           <Form>

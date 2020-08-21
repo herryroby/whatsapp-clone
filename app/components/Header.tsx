@@ -1,11 +1,11 @@
 import { Body, Button, Header as NBHeader, Icon, Right, Title } from 'native-base';
-import React from 'react';
+import React, { FC } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import colors from '../config/colors';
 
 const width = Dimensions.get('window').width;
 
-const Header: React.FC = () => (
+const Header: FC = () => (
   <NBHeader hasTabs noLeft noShadow transparent androidStatusBarColor={colors.primaryDark} style={styles.header}>
     <Body>
       <Title style={styles.title}>WhatsApp</Title>

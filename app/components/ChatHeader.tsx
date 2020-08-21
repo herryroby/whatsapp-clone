@@ -1,5 +1,5 @@
 import { Button, Icon, Text, Thumbnail } from 'native-base';
-import React from 'react';
+import React, { FC } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import colors from '../config/colors';
 
@@ -9,7 +9,7 @@ interface ChatHeaderProps {
   params?: any;
 }
 
-const ChatHeader: React.FC<ChatHeaderProps> = ({ params }) => {
+const ChatHeader: FC<ChatHeaderProps> = ({ params }) => {
   const { user, avatar } = params;
   return (
     <View style={styles.header}>

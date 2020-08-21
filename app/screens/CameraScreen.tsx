@@ -1,14 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Camera } from 'expo-camera';
 import { Text } from 'native-base';
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import colors from '../config/colors';
 
 const width = Dimensions.get('window').width;
 
-const CameraScreen: React.FC = () => {
+const CameraScreen: FC = () => {
   const [hasCameraPermission, setHasCameraPermission] = useState(false);
   const [type, setType] = useState(Camera.Constants.Type.back);
 

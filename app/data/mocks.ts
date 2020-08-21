@@ -11,7 +11,7 @@ export const chatData = [
     contactName: 'Darren Black',
     contactAvatar: 'https://randomuser.me/api/portraits/men/17.jpg',
     snippet: 'Have a good day too bro!',
-    latestUpdateTime: new Date(2020, 8, 17, 8, 54, 0),
+    latestUpdateTime: '8:54 AM',
     conversations: [
       {
         convId: 1,
@@ -74,7 +74,7 @@ export const chatData = [
     contactName: 'Camila Wilson',
     contactAvatar: 'https://randomuser.me/api/portraits/women/66.jpg',
     snippet: 'Hi. How are you?',
-    latestUpdateTime: new Date(2020, 8, 16, 14, 2, 0),
+    latestUpdateTime: '2:02 PM',
     conversations: [
       {
         convId: 1,
@@ -89,7 +89,7 @@ export const chatData = [
     contactName: 'Craig Nelson',
     contactAvatar: 'https://randomuser.me/api/portraits/men/33.jpg',
     snippet: 'Where have you been?',
-    latestUpdateTime: new Date(2020, 8, 16, 10, 24, 0),
+    latestUpdateTime: '10:24 AM',
     conversations: [
       {
         convId: 1,
@@ -104,7 +104,7 @@ export const chatData = [
     contactName: 'Deanna Riley',
     contactAvatar: 'https://randomuser.me/api/portraits/women/34.jpg',
     snippet: 'Hey! When are you planning to come?',
-    latestUpdateTime: new Date(2020, 8, 15, 9, 5, 0),
+    latestUpdateTime: '9:05 AM',
     conversations: [
       {
         convId: 1,
@@ -119,7 +119,7 @@ export const chatData = [
     contactName: 'Douglas Newman',
     contactAvatar: 'https://randomuser.me/api/portraits/men/81.jpg',
     snippet: 'Shoot me an email.',
-    latestUpdateTime: new Date(2020, 8, 14, 19, 54, 0),
+    latestUpdateTime: '7:54 PM',
     conversations: [
       {
         convId: 1,
@@ -134,7 +134,7 @@ export const chatData = [
     contactName: 'Katrina Henry',
     contactAvatar: 'https://randomuser.me/api/portraits/women/21.jpg',
     snippet: 'Thank you. That was really helpful.',
-    latestUpdateTime: new Date(2020, 8, 13, 13, 15, 0),
+    latestUpdateTime: '1:15 PM',
     conversations: [
       {
         convId: 1,
@@ -148,46 +148,54 @@ export const chatData = [
 
 export const statusData = [
   {
+    id: 1,
     contactName: 'Deanna Riley',
     contactAvatar: 'https://randomuser.me/api/portraits/women/34.jpg',
-    time: new Date('08/17/2020'),
+    timestamp: 'August 17, 9:15 AM',
   },
   {
+    id: 2,
     contactName: 'Darren Black',
     contactAvatar: 'https://randomuser.me/api/portraits/men/17.jpg',
-    time: new Date('08/16/2020'),
+    timestamp: 'August 16, 8:21 PM',
   },
   {
+    id: 3,
     contactName: 'Katrina Henry',
     contactAvatar: 'https://randomuser.me/api/portraits/women/21.jpg',
-    time: new Date('08/16/2020'),
+    timestamp: 'August 16, 3:11 PM',
   },
   {
+    id: 4,
     contactName: 'Camila Wilson',
     contactAvatar: 'https://randomuser.me/api/portraits/women/66.jpg',
-    time: new Date('08/15/2020'),
+    timestamp: 'August 15, 11:43 AM',
   },
 ];
 
 export const callsData = [
   {
+    id: 1,
     contactName: 'Katrina Henry',
     contactAvatar: 'https://randomuser.me/api/portraits/women/21.jpg',
-    time: new Date('08/13/2020'),
+    timestamp: 'August 13, 5:17 PM',
   },
   {
+    id: 2,
     contactName: 'Douglas Newman',
     contactAvatar: 'https://randomuser.me/api/portraits/men/81.jpg',
-    time: new Date('08/13/2020'),
+    timestamp: 'August 13, 10:22 PM',
   },
   {
+    id: 3,
     contactName: 'Darren Black',
     contactAvatar: 'https://randomuser.me/api/portraits/men/17.jpg',
-    time: new Date('08/10/2020'),
+    timestamp: 'August 10, 1:05 PM',
   },
   {
+    id: 4,
     contactName: 'Deanna Riley',
     contactAvatar: 'https://randomuser.me/api/portraits/women/34.jpg',
-    time: new Date('08/08/2020'),
+    timestamp: 'August 8, 8:29 AM',
   },
 ];

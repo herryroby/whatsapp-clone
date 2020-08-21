@@ -1,13 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import { Button, Container, Content, Text, View } from 'native-base';
-import React from 'react';
+import React, { FC } from 'react';
 import { Image, Linking, StyleSheet } from 'react-native';
 import colors from '../config/colors';
 
 const privacyPolicyUrl = 'https://www.whatsapp.com/legal/?lang=en#privacy-policy';
 const termsOfServiceUrl = 'https://www.whatsapp.com/legal/?lang=en#terms-of-service';
 
-const WelcomeScreen: React.FC = () => {
+const WelcomeScreen: FC = () => {
   const navigation = useNavigation();
   return (
     <Container>

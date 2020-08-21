@@ -1,43 +1,76 @@
 import { Body, Button, Container, Fab, Icon, Left, List, ListItem, Right, Text, Thumbnail } from 'native-base';
-import React from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import colors from '../config/colors';
-import { Calls } from '../types';
-import { getFormatedDate } from '../utils/getFormatedDate';
+import { Call, fetchCalls } from '../redux/reducers/callsSlice';
+import { RootState } from '../redux/rootReducer';
 
-interface CallListScreenProps {
-  calls: Calls;
-}
+const CallListScreen: FC = () => {
+  const [calls, setCalls] = useState<Call[]>([]);
+  const dispatch = useDispatch();
+  const { loading, error, data } = useSelector((state: RootState) => ({
+    loading: state.calls.loading,
+    error: state.calls.error,
+    data: state.calls.data,
+  }));
 
-const CallListScreen: React.FC<CallListScreenProps> = ({ calls }) => (
-  <Container>
-    <List
-      dataArray={calls}
-      keyExtractor={(item, index) => index + item}
-      renderRow={(call) => (
-        <ListItem avatar>
-          <Left>
-            <Thumbnail source={{ uri: call.contactAvatar }} />
-          </Left>
-          <Body style={styles.body}>
-            <Text style={styles.bold}>{call.contactName}</Text>
-            <Text note style={styles.lineHeight}>
-              {getFormatedDate(call.time)}
-            </Text>
-          </Body>
-          <Right>
-            <Button transparent>
-              <Icon active name="call" style={styles.callButton} />
-            </Button>
-          </Right>
-        </ListItem>
-      )}
-    />
-    <Fab style={styles.fab} position="bottomRight">
-      <Icon name="md-call" />
-    </Fab>
-  </Container>
-);
+  useEffect(() => {
+    dispatch(fetchCalls());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setCalls(data);
+  }, [data]);
+
+  if (loading) {
+    return (
+      <Container>
+        <Text>Loading...</Text>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container>
+        <Text> Error: {error}</Text>
+      </Container>
+    );
+  }
+
+  return (
+    <Container>
+      <List
+        dataArray={calls}
+        keyExtractor={(item) => item.id.toString()}
+        renderRow={(call) => (
+          <ListItem avatar>
+            <Left>
+              <Thumbnail
+                source={call.contactAvatar ? { uri: call.contactAvatar } : require('../assets/images/avatar.png')}
+              />
+            </Left>
+            <Body style={styles.body}>
+              <Text style={styles.bold}>{call.contactName}</Text>
+              <Text note style={styles.lineHeight}>
+                {call.timestamp}
+              </Text>
+            </Body>
+            <Right>
+              <Button transparent>
+                <Icon active name="call" style={styles.callButton} />
+              </Button>
+            </Right>
+          </ListItem>
+        )}
+      />
+      <Fab style={styles.fab} position="bottomRight">
+        <Icon name="md-call" />
+      </Fab>
+    </Container>
+  );
+};
 
 const styles = StyleSheet.create({
   body: {

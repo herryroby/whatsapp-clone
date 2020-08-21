@@ -2,23 +2,52 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import moment from 'moment';
 import { Body, Container, Fab, Left, List, ListItem, Right, Text, Thumbnail } from 'native-base';
-import React from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import colors from '../config/colors';
-import { Chats } from '../types';
+import { ChatRoom, fetchChats } from '../redux/reducers/chatsSlice';
+import { RootState } from '../redux/rootReducer';
 
-interface ChatListScreenProps {
-  chats?: Chats;
-}
-
-const ChatListScreen: React.FC<ChatListScreenProps> = ({ chats }) => {
+const ChatListScreen: FC = () => {
+  const [chatRooms, setChatRooms] = useState<ChatRoom[]>([]);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { loading, error, data } = useSelector((state: RootState) => ({
+    loading: state.chats.loading,
+    error: state.chats.error,
+    data: state.chats.data,
+  }));
+
+  useEffect(() => {
+    dispatch(fetchChats());
+  }, [dispatch]);
+
+  useEffect(() => {
+    setChatRooms(data);
+  }, [data]);
+
+  if (loading) {
+    return (
+      <Container>
+        <Text>Loading...</Text>
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container>
+        <Text> Error: {error}</Text>
+      </Container>
+    );
+  }
 
   return (
     <Container>
       <List
-        dataArray={chats}
-        keyExtractor={(item, index) => index + item}
+        dataArray={chatRooms}
+        keyExtractor={(item) => item.chatRoomId.toString()}
         renderRow={(chat) => (
           <ListItem
             avatar
@@ -32,7 +61,9 @@ const ChatListScreen: React.FC<ChatListScreenProps> = ({ chats }) => {
             }
           >
             <Left>
-              <Thumbnail source={{ uri: chat.contactAvatar }} />
+              <Thumbnail
+                source={chat.contactAvatar ? { uri: chat.contactAvatar } : require('../assets/images/avatar.png')}
+              />
             </Left>
             <Body style={styles.body}>
               <Text style={styles.bold}>{chat.contactName}</Text>

@@ -6,9 +6,11 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
 import 'react-native-gesture-handler';
+import { Provider } from 'react-redux';
 import ErrorBoundary from './app/components/ErrorBoundary';
 import colors from './app/config/colors';
 import AppNavigator from './app/navigation/AppNavigator';
+import store from './app/redux/store';
 
 const App: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
@@ -18,11 +20,6 @@ const App: React.FC = () => {
     let isMounted = true;
     const loadResource = async () => {
       try {
-        // if (Platform.OS === 'android') {
-        //   StatusBar.setTranslucent(true);
-        //   StatusBar.setBarStyle('light-content');
-        //   StatusBar.setBackgroundColor(colors.primaryDark);
-        // }
         await Font.loadAsync({
           Roboto: require('./app/assets/fonts/Roboto.ttf'),
           Roboto_medium: require('./app/assets/fonts/Roboto_medium.ttf'),
@@ -41,12 +38,14 @@ const App: React.FC = () => {
 
   return (
     <ErrorBoundary>
-      <AppearanceProvider>
-        <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <StatusBar style="light" backgroundColor={colors.primaryDark} />
-          {!isReady ? <AppLoading /> : <AppNavigator />}
-        </NavigationContainer>
-      </AppearanceProvider>
+      <Provider store={store}>
+        <AppearanceProvider>
+          <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+            <StatusBar style="light" backgroundColor={colors.primaryDark} />
+            {!isReady ? <AppLoading /> : <AppNavigator />}
+          </NavigationContainer>
+        </AppearanceProvider>
+      </Provider>
     </ErrorBoundary>
   );
 };

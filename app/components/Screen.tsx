@@ -1,6 +1,6 @@
 import Constants from 'expo-constants';
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { FC } from 'react';
 import { SafeAreaView, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import colors from '../config/colors';
 
@@ -9,7 +9,7 @@ interface ScreenProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const Screen: React.FC<ScreenProps> = ({ children, style }) => (
+const Screen: FC<ScreenProps> = ({ children, style }) => (
   <SafeAreaView style={[styles.screen, style]}>
     <StatusBar style="light" backgroundColor={colors.primaryDark} />
     {children}

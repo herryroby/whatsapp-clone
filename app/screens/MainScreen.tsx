@@ -1,70 +1,62 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { ScrollableTab, Tab, TabHeading, Tabs as NBTabs } from 'native-base';
-import React, { useState } from 'react';
+import React, { FC } from 'react';
 import { StyleSheet } from 'react-native';
 import Header from '../components/Header';
 import Screen from '../components/Screen';
 import colors from '../config/colors';
-import { callsData, chatData, statusData, userData } from '../data/mocks';
 import CallListScreen from './CallListScreen';
 import CameraScreen from './CameraScreen';
 import ChatListScreen from './ChatListScreen';
 import StatusListScreen from './StatusListScreen';
 
-const Tabs: React.FC = () => {
-  const [chats] = useState(chatData);
-  const [statusItems] = useState(statusData);
-  const [calls] = useState(callsData);
-  const [user] = useState(userData);
-
-  return (
-    <Screen style={styles.screen}>
-      <Header />
-      <NBTabs
-        initialPage={1}
-        tabBarUnderlineStyle={styles.tabBarUnderline}
-        renderTabBar={() => <ScrollableTab style={styles.tabContainer} />}
+const MainScreen: FC = () => (
+  <Screen style={styles.screen}>
+    <Header />
+    <NBTabs
+      initialPage={1}
+      tabBarUnderlineStyle={styles.tabBarUnderline}
+      renderTabBar={() => <ScrollableTab style={styles.tabContainer} />}
+    >
+      <Tab
+        heading={
+          <TabHeading style={[styles.tabHeading]}>
+            <FontAwesome name="camera" size={20} style={styles.cameraIcon} />
+          </TabHeading>
+        }
       >
-        <Tab
-          heading={
-            <TabHeading style={[styles.tabHeading]}>
-              <FontAwesome name="camera" size={20} style={styles.cameraIcon} />
-            </TabHeading>
-          }
-        >
-          <CameraScreen />
-        </Tab>
-        <Tab
-          heading="CHATS"
-          tabStyle={styles.tabHeading}
-          textStyle={styles.tabText}
-          activeTabStyle={styles.activeTabStyle}
-          activeTextStyle={styles.activeTabText}
-        >
-          <ChatListScreen chats={chats} />
-        </Tab>
-        <Tab
-          heading="STATUS"
-          tabStyle={styles.tabHeading}
-          textStyle={styles.tabText}
-          activeTabStyle={styles.activeTabStyle}
-          activeTextStyle={styles.activeTabText}
-        >
-          <StatusListScreen statusItems={statusItems} user={user} />
-        </Tab>
-        <Tab
-          heading="CALLS"
-          tabStyle={styles.tabHeading}
-          textStyle={styles.tabText}
-          activeTabStyle={styles.activeTabStyle}
-          activeTextStyle={styles.activeTabText}
-        >
-          <CallListScreen calls={calls} />
-        </Tab>
-      </NBTabs>
-    </Screen>
-  );
-};
+        <CameraScreen />
+      </Tab>
+      <Tab
+        heading="CHATS"
+        tabStyle={styles.tabHeading}
+        textStyle={styles.tabText}
+        activeTabStyle={styles.activeTabStyle}
+        activeTextStyle={styles.activeTabText}
+      >
+        <ChatListScreen />
+      </Tab>
+      <Tab
+        heading="STATUS"
+        tabStyle={styles.tabHeading}
+        textStyle={styles.tabText}
+        activeTabStyle={styles.activeTabStyle}
+        activeTextStyle={styles.activeTabText}
+      >
+        <StatusListScreen />
+      </Tab>
+      <Tab
+        heading="CALLS"
+        tabStyle={styles.tabHeading}
+        textStyle={styles.tabText}
+        activeTabStyle={styles.activeTabStyle}
+        activeTextStyle={styles.activeTabText}
+      >
+        <CallListScreen />
+      </Tab>
+    </NBTabs>
+  </Screen>
+);
 
 const styles = StyleSheet.create({
   activeTabStyle: {
@@ -98,4 +90,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Tabs;
+export default MainScreen;
