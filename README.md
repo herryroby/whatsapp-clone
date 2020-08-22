@@ -1,5 +1,8 @@
 # WhatsApp Messenger Clone
 
+![Screenshot #1](./.github/images/01.png?raw=true 'Screenshot #1')
+![Screenshot #2](./.github/images/02.png?raw=true 'Screenshot #2')
+
 ## Features
 
 ### General
