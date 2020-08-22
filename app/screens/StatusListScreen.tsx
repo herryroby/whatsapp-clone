@@ -114,13 +114,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   createIcon: {
-    color: colors.primary,
+    color: '#47696d',
   },
   fab: {
     backgroundColor: colors.secondary,
   },
   fabCreateContainer: {
-    backgroundColor: colors.light,
+    backgroundColor: '#ecf5f6',
   },
   lineHeight: {
     height: 21,
