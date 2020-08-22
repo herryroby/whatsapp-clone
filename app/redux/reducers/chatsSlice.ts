@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { chatData } from '../../data/mocks';
 import { AppThunk } from '../store';
+import { chatData } from './../../data/mocks';
 
 export interface Chat {
   convId: number;
@@ -66,10 +66,10 @@ export const { setLoading, setError, setData } = chatsSlice.actions;
 
 export default chatsSlice.reducer;
 
-export const fetchChats = (): AppThunk => async (dispatch) => {
+export const fetchChats = (chat = chatData): AppThunk => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    dispatch(setData(chatData));
+    dispatch(setData(chat));
   } catch (err) {
     dispatch(setError(err.message));
   }

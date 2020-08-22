@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Screen from '../components/Screen';
 import colors from '../config/colors';
-import { ChatRoom, fetchChats } from '../redux/reducers/chatsSlice';
+import { ChatRoom, fetchChats, setData } from '../redux/reducers/chatsSlice';
 import { fetchUser, User } from '../redux/reducers/userSlice';
 import { RootState } from '../redux/rootReducer';
 
@@ -78,7 +78,16 @@ const ChatScreen: FC<ChatScreenProps> = ({ route }) => {
   const handleChange = (value: string) => setMessage(value);
 
   const handleSubmit = () => {
-    console.log(message);
+    const newMessage = { convId: Date.now(), user: user.username, message, timestamp: '8:48 AM' };
+    const newChatRooms = chatRooms.map((chatRoom) => {
+      if (chatRoom.chatRoomId === chatRoomId)
+        return {
+          ...chatRoom,
+          conversations: [...chatsFiltered[0].conversations, newMessage],
+        };
+      return chatRoom;
+    });
+    dispatch(setData(newChatRooms));
     setMessage('');
   };
 
